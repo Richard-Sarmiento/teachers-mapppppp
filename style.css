@@ -3,53 +3,47 @@ body {
     color: white;
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
-    overflow-x: hidden;
 }
 
 header {
     text-align: center;
-    padding: 30px 20px;
+    padding: 20px;
     background: #020617;
     border-bottom: 2px solid #1e293b;
 }
 
 #clock {
-    margin-top: 8px;
     font-size: 14px;
     color: #94a3b8;
+    margin-top: 5px;
 }
 
 #searchBar {
-    margin-top: 20px;
-    padding: 12px 20px;
-    border-radius: 25px;
-    border: 1px solid #334155;
-    width: 90%;
-    max-width: 450px;
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    width: 300px;
     background: #1e293b;
     color: white;
-    outline: none;
 }
 
 .teacher-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 30px;
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 20px;
-    justify-items: center;
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .teacher {
     text-align: center;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: 0.3s;
 }
 
-.teacher:hover {
-    transform: translateY(-10px);
-}
+.teacher:hover { transform: scale(1.1); }
 
 .teacher img, .profile-img {
     width: 130px;
@@ -57,40 +51,29 @@ header {
     border-radius: 50%;
     border: 4px solid #22c55e;
     object-fit: cover;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 }
 
-.teacher-name {
-    margin-top: 12px;
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.admin-section {
-    text-align: center;
-    padding: 40px 0;
-}
+.admin-section { text-align: center; margin: 20px; }
 
 button {
     padding: 10px 20px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     background: #2563eb;
     color: white;
     cursor: pointer;
-    font-weight: 600;
+    margin: 5px;
 }
 
-button:hover { background: #1d4ed8; }
 .delete { background: #ef4444; }
 
-/* MODALS */
+/* MODAL STYLES */
 .modal {
     display: none;
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0,0,0,0.8);
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -99,40 +82,31 @@ button:hover { background: #1d4ed8; }
 .modal-content {
     background: #1e293b;
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 15px;
     text-align: center;
-    width: 90%;
-    max-width: 380px;
 }
 
-/* FULL SCREEN SCHEDULE VIEWER */
+/* FULL SCREEN PC FIX */
 #scheduleViewer {
     display: none;
     position: fixed;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
-    background: #000;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
-    cursor: pointer;
 }
 
 #scheduleFull {
-    max-width: 98vw;
-    max-height: 98vh;
+    /* This part makes it big on PC */
+    height: 95vh; 
+    width: auto;
+    max-width: 95vw;
     object-fit: contain;
+    border: 2px solid #22c55e;
 }
 
 .admin-only { display: none; }
-
-input[type="text"], input[type="password"] {
-    width: 85%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid #334155;
-    background: #0f172a;
-    color: white;
-}
