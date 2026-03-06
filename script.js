@@ -1,4 +1,3 @@
-// Initial Data - Lowercase first names for PNG files
 let teachers = [
     { name: "Anna Lea Casela", file: "anna.png" },
     { name: "Azenith Recile", file: "azenith.png" },
@@ -13,35 +12,23 @@ let teachers = [
 ];
 
 const grid = document.getElementById('teacherGrid');
-let currentEditIndex = null;
+let currentIndex = null;
 
-// Render the Teacher Grid
-function render(list = teachers) {
+function render(data = teachers) {
     grid.innerHTML = "";
-    list.forEach((t, index) => {
+    data.forEach((t, i) => {
         const div = document.createElement('div');
         div.className = "teacher";
-        div.onclick = () => openProfile(index);
-        div.innerHTML = `
-            <img src="${t.file}" alt="${t.name}" onerror="this.src='https://via.placeholder.com/120?text=No+Photo'">
-            <div class="teacher-name">${t.name}</div>
-        `;
+        div.onclick = () => openProfile(i);
+        div.innerHTML = `<img src="${t.file}"><div class="teacher-name">${t.name}</div>`;
         grid.appendChild(div);
     });
 }
 
-// Search Functionality
-document.getElementById('searchBar').oninput = (e) => {
-    const term = e.target.value.toLowerCase();
-    const filtered = teachers.filter(t => t.name.toLowerCase().includes(term));
-    render(filtered);
-};
-
-// Profile Modal Logic
-function openProfile(index) {
-    currentEditIndex = index;
-    document.getElementById('profileName').innerText = teachers[index].name;
-    document.getElementById('profilePhoto').src = teachers[index].file;
+function openProfile(i) {
+    currentIndex = i;
+    document.getElementById('profileName').innerText = teachers[i].name;
+    document.getElementById('profilePhoto').src = teachers[i].file;
     document.getElementById('profileModal').style.display = "flex";
 }
 
@@ -49,59 +36,50 @@ function closeProfile() {
     document.getElementById('profileModal').style.display = "none";
 }
 
-// Full-Screen Schedule Logic
+// THE PC FULLSCREEN TRIGGER
 function viewSchedule() {
     const viewer = document.getElementById('scheduleViewer');
     document.getElementById('scheduleFull').src = "schedule.png";
-    viewer.style.display = "flex"; 
+    viewer.style.display = "flex";
 }
 
-// Close schedule on click
 document.getElementById('scheduleViewer').onclick = function() {
     this.style.display = "none";
 };
 
-// Admin Login Logic
+// SEARCH
+document.getElementById('searchBar').oninput = (e) => {
+    const val = e.target.value.toLowerCase();
+    const filtered = teachers.filter(t => t.name.toLowerCase().includes(val));
+    render(filtered);
+};
+
+// ADMIN
 function loginAdmin() {
-    const pass = document.getElementById('adminPass').value;
-    if(pass === "admin123") {
-        document.querySelectorAll('.admin-only').forEach(el => el.style.display = "block");
-        document.getElementById('adminLoginBtn').style.display = "none";
-        document.getElementById('logoutBtn').style.display = "inline-block";
+    if(document.getElementById('adminPass').value === "admin123") {
+        document.querySelectorAll('.admin-only').forEach(e => e.style.display = "block");
         document.getElementById('loginModal').style.display = "none";
-    } else {
-        alert("Incorrect Password!");
     }
 }
 
-// Add Teacher Function
 function saveTeacher() {
-    const nameInput = document.getElementById('teacherName').value;
-    if (nameInput) {
-        // Automatically creates filename: e.g. "John Doe" -> "john.png"
-        const fileName = nameInput.split(' ')[0].toLowerCase() + ".png";
-        teachers.push({ name: nameInput, file: fileName });
+    const name = document.getElementById('teacherName').value;
+    if(name) {
+        const file = name.split(' ')[0].toLowerCase() + ".png";
+        teachers.push({ name, file });
         render();
         document.getElementById('addModal').style.display = "none";
-        document.getElementById('teacherName').value = ""; 
-    } else {
-        alert("Please enter a name.");
     }
 }
 
-// Delete Function
 function deleteTeacher() {
-    if (confirm("Remove this teacher from the map?")) {
-        teachers.splice(currentEditIndex, 1);
-        render();
-        closeProfile();
-    }
+    teachers.splice(currentIndex, 1);
+    render();
+    closeProfile();
 }
 
-// Real-time Clock
 setInterval(() => {
     document.getElementById('clock').innerText = new Date().toLocaleString();
 }, 1000);
 
-// Initialize
 render();
